@@ -1,9 +1,10 @@
 require 'pry'
 require 'colorize'
+# require 'colorize'
 
 class Player
   #attr_accessor
-  attr_accessor :name, :bank_roll
+  # attr_accessor :name, :bank_roll
 
   def initialize
     puts "Whats your name?"
@@ -22,6 +23,11 @@ class Player
 
   def check_balance
     puts "Your balance is #{@bank_roll}"
+  end
+
+  def update_balance(op, num)
+    @bank_roll = @bank_roll.send(op, num)
+    puts @bank_roll
   end
 
 end
@@ -49,9 +55,58 @@ class Casino
     puts "1. High / Low"
     puts "2. Slots"
     puts "3. Check Balance"
-    puts "4. Exit"
+    puts "4. black jack"
+    puts "5. Exit"
     gets.to_i
   end
+
+  def repeat_slots
+    print 'enter $50 to play slots press "a" to continue "b" to quit: '
+    player = gets.strip
+    if player  == 'a'
+      playing_slots
+    elsif player == 'b'
+      goodbye
+    end
+  end
+  
+  def playing_slots
+    
+    slot_options = ["grapes", "strawberries", "lemons", "avocado"]
+    col_1 = slot_options.sample 
+    col_2 = slot_options.sample 
+    col_3 = slot_options.sample 
+    puts "#{col_1} #{col_2} #{col_3} "
+    if col_1 == col_2 && col_1 == col_3
+      puts 'you win $10,000'.colorize(:blue)
+      # @bank_roll += 10000
+      @player.update_balance('+', 10000)
+      repeat_slots
+    else 
+      puts 'you lose $50'.colorize(:red)
+      @player.update_balance('-', 50)
+      repeat_slots
+      # binding.pry
+      # @bank_roll -= 50
+    end
+    # binding.pry
+    repeat_slots
+  end
+
+#   def repeat_black_jack
+#     print  'enter to play black jack press "a" to continue "b" to quit'
+#     player = gets.strip
+#     if player == 'a'
+#       black_jack
+#       elsif player == 'b'
+#         goodbye
+#       end
+#   end
+ 
+#   def black_jack
+#   end 
+#   repeat_black_jack
+# end
 
   def menu_choice(user_choice)
     case user_choice
@@ -61,12 +116,19 @@ class Casino
         # hl.play
       when 2
         puts 'Playing Slots'
+        playing_slots
+        puts ' '
         # Create a new slots instance - slots = Slot.new
         # slot.play
         # hint: think about how to get player instance into the game
       when 3
         @player.check_balance
-      when 4
+     when 4
+      puts 'black_jack'
+      black_jack
+      puts ' '
+
+      when 5
         puts 'Thanks for playing come back soon!'
         exit
       else
@@ -75,6 +137,12 @@ class Casino
       end
   end
 
-end
+  def goodbye
+    puts "goodbye method"
+    exit
+  end
 
-Casino.new
+end #end of casino class
+
+@casino = Casino.new
+# @casino.playing_slots
