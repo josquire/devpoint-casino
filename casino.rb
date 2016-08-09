@@ -1,10 +1,11 @@
 require 'pry'
 require 'colorize'
+# require 'black_jack'
 # require 'colorize'
 
 class Player
   #attr_accessor
-  # attr_accessor :name, :bank_roll
+  attr_accessor :name, :bank_roll
 
   def initialize
     puts "Whats your name?"
@@ -77,15 +78,19 @@ class Casino
     col_2 = slot_options.sample 
     col_3 = slot_options.sample 
     puts "#{col_1} #{col_2} #{col_3} "
+    if @player.bank_roll <= 0
+      puts 'ooooowwwww!!! your out of money'
+      goodbye
+    end
     if col_1 == col_2 && col_1 == col_3
       puts 'you win $10,000'.colorize(:blue)
       # @bank_roll += 10000
       @player.update_balance('+', 10000)
       repeat_slots
-    else 
+    else
       puts 'you lose $50'.colorize(:red)
       @player.update_balance('-', 50)
-      repeat_slots
+      repeat_slots 
       # binding.pry
       # @bank_roll -= 50
     end
@@ -98,10 +103,13 @@ class Casino
 #     player = gets.strip
 #     if player == 'a'
 #       black_jack
-#       elsif player == 'b'
+#     if player == 'b'
 #         goodbye
 #       end
 #   end
+# module Blackjack
+#   VERSION = "0.1.0"
+# end
  
 #   def black_jack
 #   end 
@@ -110,39 +118,40 @@ class Casino
 
   def menu_choice(user_choice)
     case user_choice
-      when 1
-        puts 'Playing High Low'
-        # Create a new high / low instance - hl = HighLow.new
-        # hl.play
-      when 2
-        puts 'Playing Slots'
-        playing_slots
-        puts ' '
-        # Create a new slots instance - slots = Slot.new
-        # slot.play
-        # hint: think about how to get player instance into the game
-      when 3
-        @player.check_balance
-     when 4
+    when 1
+      puts 'Playing High Low'
+      # Create a new high / low instance - hl = HighLow.new
+      # hl.play
+    when 2
+      puts 'Playing Slots'
+      playing_slots
+      puts ' '
+      # Create a new slots instance - slots = Slot.new
+      # slot.play
+      # hint: think about how to get player instance into the game
+    when 3
+      @player.check_balance
+    when 4
       puts 'black_jack'
       black_jack
       puts ' '
 
-      when 5
-        puts 'Thanks for playing come back soon!'
-        exit
-      else
-        puts 'Invalid menu choice'
-        menu_choice
-      end
+    when 5
+      puts 'Thanks for playing come back soon!'
+      exit
+    else
+      puts 'Invalid menu choice'
+      menu_choice
+    end
   end
 
   def goodbye
     puts "goodbye method"
     exit
   end
+end
 
-end #end of casino class
+# end #end of casino class
 
 @casino = Casino.new
 # @casino.playing_slots
