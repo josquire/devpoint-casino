@@ -1,28 +1,27 @@
-#Card deck is constructed
-#first card is shown
-#user guess higher or lower
-#if correct game continues - right all times player wins. add to bankroll go to menu
-#if wrong - game is terminated - take from bank_roll
-#play again? or exit to main menu
+require 'colorize'
+require_relative 'casino'
+require 'pry'
+
+class Player
+
+  def update_balance(num)
+    @bank_roll += num
+  end
+end
+
 
 
 class Highlow
-  #attr_accessor
+  attr_accessor :deck
   def initialize
-    puts 'Welcome to High Low'
-
-
-
+    @deck = Deck.new
   end
 
 end
 
 
 class Card
- # Getter and Setter methods for rank, suit and color
  attr_accessor :rank, :suit, :color
- # Gets called when you call the new method to create an instance
- # card = Card.new('10', 'K', 'Black')
  def initialize(rank, suit, color)
    @rank = rank
    @suit = suit
@@ -30,14 +29,9 @@ class Card
  end
 end
 
-
-
 class Deck
- # Getter and Setter methods for rank, suit and color
  attr_accessor :cards
 
- #Gets called when you call the new method to create an instance
- #deck = Deck.new
  def initialize
    @ranks = %w(A 2 3 4 5 6 7 8 9 10 J Q K)
    @suits = %w(Spades Diamonds Clubs Hearts)
@@ -56,9 +50,78 @@ class Deck
  end
 end
 
+def start
+  @new_game = Highlow.new
+  generate_cards
+end
+
+def generate_cards
+  @card_1 = @new_game.deck.cards.sample
+  @card_2 = @new_game.deck.cards.sample
+  place_bet
+end
+
+def place_bet
+  puts "Welcome to HighLow"
+  puts "Your card is: #{@card_1.rank} #{@card_1.suit}"
+  puts "\nAre you betting High or Low?"
+  @bet = gets.strip.downcase
+  puts "You're betting #{@bet}"
+  puts "\nYour 2nd card is: #{@card_2.rank} #{@card_2.suit}"
+  bet
+end
 
 
-# Instantiate a new deck
-d = Deck.new
-# Get all the cards in the deck
-puts d.cards
+def bet
+  #add some logic if Q or A
+  if @card_2.rank < @card_1.rank
+      puts "Its LOW"
+        if @bet == 'low'
+          puts "You win $50".colorize(:green)
+          # player.update_balance(50)
+          play_again
+        else
+          puts "You lose $50".colorize(:red)
+          # player.update_balance(-50)
+          play_again
+        end
+  else
+    puts "Its HIGH"
+      if @bet == 'high'
+        puts "You win $50".colorize(:green)
+        # player.update_balance(50)
+        play_again
+      else
+        puts "You lose $50".colorize(:red)
+        # player.update_balance(-50)
+        play_again
+      end
+  end
+end
+
+def play_again
+  puts "Would you like to: "
+  puts "1. Play again"
+  puts "2. Play Slots"
+  puts "3. Back to main Casino"
+  puts "4. Exit"
+
+  again = gets.chomp.to_i
+
+  case again
+    when 1
+      generate_cards
+    when 2
+      #link to slots
+      puts "go to slots"
+    when 3
+      Casino.new
+    when 4
+      exit
+    else
+      puts "Invalid entry, try again"
+      play_again
+  end
+end
+
+start
