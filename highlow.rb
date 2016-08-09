@@ -21,11 +21,12 @@ end
 
 
 class Card
- attr_accessor :rank, :suit, :color
- def initialize(rank, suit, color)
+ attr_accessor :rank, :suit, :color, :value
+ def initialize(rank, suit, color, value)
    @rank = rank
    @suit = suit
    @color = color
+   @value = value.to_i
  end
 end
 
@@ -35,6 +36,7 @@ class Deck
  def initialize
    @ranks = %w(A 2 3 4 5 6 7 8 9 10 J Q K)
    @suits = %w(Spades Diamonds Clubs Hearts)
+   @value = %w(14 2 3 4 5 6 7 8 9 10 11 12 13)
    @cards = []
    generate_deck
  end
@@ -44,7 +46,7 @@ class Deck
      @ranks.size.times do |i|
        # Ternary Operator
        color = (i % 2 == 0) ? 'Black' : 'Red'
-       @cards << Card.new(@ranks[i], suit, color)
+       @cards << Card.new(@ranks[i], suit, color, @value[i])
      end
    end
  end
@@ -63,6 +65,8 @@ end
 
 def place_bet
   puts "Welcome to HighLow"
+  puts "What is your bet amount?"
+  @bet_amount = gets.to_f
   puts "Your card is: #{@card_1.rank} #{@card_1.suit}"
   puts "\nAre you betting High or Low?"
   @bet = gets.strip.downcase
@@ -74,26 +78,26 @@ end
 
 def bet
   #add some logic if Q or A
-  if @card_2.rank < @card_1.rank
+  if @card_2.value < @card_1.value
       puts "Its LOW"
         if @bet == 'low'
-          puts "You win $50".colorize(:green)
-          # player.update_balance(50)
+          puts "You win #{@bet_amount}".colorize(:green)
+          #@player.update_balance('+', @bet_amount)
           play_again
         else
-          puts "You lose $50".colorize(:red)
-          # player.update_balance(-50)
+          puts "You lose #{@bet_amount}".colorize(:red)
+          #@player.update_balance('-', @bet_amount)
           play_again
         end
   else
     puts "Its HIGH"
       if @bet == 'high'
-        puts "You win $50".colorize(:green)
-        # player.update_balance(50)
+        puts "You win #{@bet_amount}".colorize(:green)
+        #@player.update_balance('+', @bet_amount)
         play_again
       else
-        puts "You lose $50".colorize(:red)
-        # player.update_balance(-50)
+        puts "You lose #{@bet_amount}".colorize(:red)
+        #@player.update_balance('-', @bet_amount)
         play_again
       end
   end
