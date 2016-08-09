@@ -33,6 +33,7 @@ class Player
 
 end
 
+# player_1 = Player.new(name, bank_roll)
 
 class Casino
   # make sure you use attr_accessor
