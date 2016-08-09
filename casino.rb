@@ -1,5 +1,6 @@
-require 'pry'
-require 'colorize'
+require "pry"
+require "colorize"
+require_relative "highlow"
 # require 'colorize'
 
 class Player
@@ -58,8 +59,8 @@ class Casino
     puts "CASINO MENU"
     puts "1. High / Low"
     puts "2. Slots"
-    puts "3. Check Balance"
-    puts "4. black jack"
+    puts "3. BLack Jack"
+    puts "4. Check Balance"
     puts "5. Exit"
     gets.to_i
   end
@@ -70,7 +71,26 @@ class Casino
     if player  == 'a'
       playing_slots
     elsif player == 'b'
-     Casino.menu
+      puts "Thank you for playing Slots!"
+      puts "If you would like to play another game type 'y' or type 'n' to exit the casino"
+      print ">>> :"
+
+      #TODO FIX y_n: inputing y calls wrong choice!
+
+      y_n = gets.to_s
+        case y_n
+        when 'y'
+          Casino.new
+        when 'n'
+          goodbye
+        end
+
+        # if y_n == "y"
+        #   Casino.new
+        # else
+        #   y_n == "n"
+        #   goodbye
+        # end
     end
   end
 
@@ -116,6 +136,7 @@ class Casino
     case user_choice
       when 1
         puts 'Playing High Low'
+        @new_game
         # Create a new high / low instance - hl = HighLow.new
         # hl.play
       when 2
@@ -127,11 +148,10 @@ class Casino
         # hint: think about how to get player instance into the game
       when 3
         @player.check_balance
-     when 4
-      puts 'black_jack'
-      black_jack
-      puts ' '
-
+      when 4
+        puts 'black_jack'
+        black_jack
+        puts ' '
       when 5
         puts 'Thanks for playing come back soon!'
         exit
@@ -142,7 +162,7 @@ class Casino
   end
 
   def goodbye
-    puts "goodbye method"
+    puts "goodbye please comeback to the casino again!"
     exit
   end
 
