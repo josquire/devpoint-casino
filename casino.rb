@@ -22,6 +22,7 @@ class Player
 
   def check_balance
     puts "Your balance is #{@bank_roll}"
+    Casino.menu
   end
 
 end
@@ -29,22 +30,24 @@ end
 
 class Casino
   # make sure you use attr_accessor
-  attr_accessor :player
-
   def initialize
     puts "Welcome to the Casino!"
-    @player = Player.new
-    @player.greeting
     # should allow the user to keep playing games
     # while loop??
     # should allow the user to keep making menu choices
     # even if it's an invalid choice
-    user_choice = menu
+    initialize_player
+    user_choice = Casino.menu
     menu_choice(user_choice)
     # binding.pry
   end
 
-  def menu
+  def initialize_player
+    @player = Player.new
+    @player.greeting
+  end
+
+  def self.menu
     puts "CASINO MENU"
     puts "1. High / Low"
     puts "2. Slots"
