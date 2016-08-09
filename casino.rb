@@ -1,5 +1,6 @@
-require 'pry'
-require 'colorize'
+require "pry"
+require "colorize"
+require_relative "highlow"
 # require 'colorize'
 
 class Player
@@ -23,6 +24,12 @@ class Player
 
   def check_balance
     puts "Your balance is #{@bank_roll}"
+    Casino.menu
+  end
+
+  def update_balance(op, num)
+    @bank_roll = @bank_roll.send(op, num)
+    puts @bank_roll
   end
 
   def update_balance(op, num)
@@ -32,30 +39,33 @@ class Player
 
 end
 
+# player_1 = Player.new(name, bank_roll)
 
 class Casino
   # make sure you use attr_accessor
-  attr_accessor :player
-
   def initialize
     puts "Welcome to the Casino!"
-    @player = Player.new
-    @player.greeting
     # should allow the user to keep playing games
     # while loop??
     # should allow the user to keep making menu choices
     # even if it's an invalid choice
-    user_choice = menu
+    initialize_player
+    user_choice = Casino.menu
     menu_choice(user_choice)
     # binding.pry
   end
 
-  def menu
+  def initialize_player
+    @player = Player.new
+    @player.greeting
+  end
+
+  def self.menu
     puts "CASINO MENU"
     puts "1. High / Low"
     puts "2. Slots"
-    puts "3. Check Balance"
-    puts "4. black jack"
+    puts "3. BLack Jack"
+    puts "4. Check Balance"
     puts "5. Exit"
     gets.to_i
   end
@@ -66,23 +76,42 @@ class Casino
     if player  == 'a'
       playing_slots
     elsif player == 'b'
-      goodbye
+      puts "Thank you for playing Slots!"
+      puts "If you would like to play another game type 'y' or type 'n' to exit the casino"
+      print ">>> :"
+
+      #TODO FIX y_n: inputing y calls wrong choice!
+
+      y_n = gets.to_s
+        case y_n
+        when 'y'
+          Casino.new
+        when 'n'
+          goodbye
+        end
+
+        # if y_n == "y"
+        #   Casino.new
+        # else
+        #   y_n == "n"
+        #   goodbye
+        # end
     end
   end
-  
+
   def playing_slots
-    
+
     slot_options = ["grapes", "strawberries", "lemons", "avocado"]
-    col_1 = slot_options.sample 
-    col_2 = slot_options.sample 
-    col_3 = slot_options.sample 
+    col_1 = slot_options.sample
+    col_2 = slot_options.sample
+    col_3 = slot_options.sample
     puts "#{col_1} #{col_2} #{col_3} "
     if col_1 == col_2 && col_1 == col_3
       puts 'you win $10,000'.colorize(:blue)
       # @bank_roll += 10000
       @player.update_balance('+', 10000)
       repeat_slots
-    else 
+    else
       puts 'you lose $50'.colorize(:red)
       @player.update_balance('-', 50)
       repeat_slots
@@ -102,9 +131,9 @@ class Casino
 #         goodbye
 #       end
 #   end
- 
+
 #   def black_jack
-#   end 
+#   end
 #   repeat_black_jack
 # end
 
@@ -112,6 +141,7 @@ class Casino
     case user_choice
       when 1
         puts 'Playing High Low'
+        @new_game
         # Create a new high / low instance - hl = HighLow.new
         # hl.play
       when 2
@@ -123,11 +153,10 @@ class Casino
         # hint: think about how to get player instance into the game
       when 3
         @player.check_balance
-     when 4
-      puts 'black_jack'
-      black_jack
-      puts ' '
-
+      when 4
+        puts 'black_jack'
+        black_jack
+        puts ' '
       when 5
         puts 'Thanks for playing come back soon!'
         exit
@@ -138,7 +167,7 @@ class Casino
   end
 
   def goodbye
-    puts "goodbye method"
+    puts "goodbye please comeback to the casino again!"
     exit
   end
 
