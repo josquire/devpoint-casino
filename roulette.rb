@@ -14,7 +14,6 @@ class Roulette
     @black = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
   end
 
-
   def generate_number
     @wheel_num = @number_array.sample
   end
@@ -80,50 +79,44 @@ def play_again
   if again == 'y'
     start
   else
-    exit
+    #exit
     #casino
   end
-  end
 end
-
-
-
-def start
-  @new_game = Roulette.new
-  roulette_menu
-end
-
-
-@new_game = Roulette.new
-@new_game.roulette_menu
-=======
-module Roulette
-  class Spin_num
-    attr_accessor :color, :number
-    def initialize(number, color)
-      @number = number
-      @color = color
-    end
-  end
-
-  class Roulette
-    def initialize
-      @number_array =  %w(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)
-      generate_number
-    end
-
-
-    def self.generate_number
-      @number = @number_array.sample
-        color = (@number % 2 == 0) ? 'Black' : 'Red'
-        @wheel_num = Spin_num.new(@number, color)
-        puts "#{@wheel_num.number} #{@wheel_num.color}"
-    end
-  end
-
-  def self.start
+  def start
     @new_game = Roulette.new
+    roulette_menu
   end
-end # end module
+end
 
->>>>>>> fetched roulette
+
+# @new_game = Roulette.new
+# @new_game.roulette_menu
+
+# module Roulette
+#   class Spin_num
+#     attr_accessor :color, :number
+#     def initialize(number, color)
+#       @number = number
+#       @color = color
+#     end
+#   end
+
+#   class Roulette
+#     def initialize
+#       @number_array =  %w(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)
+#       generate_number
+#     end
+
+#     def self.generate_number
+#       @number = @number_array.sample
+#         color = (@number % 2 == 0) ? 'Black' : 'Red'
+#         @wheel_num = Spin_num.new(@number, color)
+#         puts "#{@wheel_num.number} #{@wheel_num.color}"
+#     end
+#   end
+
+#   def self.start
+#     @new_game = Roulette.new
+#   end
+# end # end module

@@ -1,10 +1,10 @@
-#our casino
+
 
 require'pry'
 require'colorize'
 require_relative'highlow'
 require_relative'slots'
-#require_relative 'roulette'
+require_relative 'roulette'
 #require_relative 'blackjack'
 #binding.pry
 module Person
@@ -50,6 +50,7 @@ end
 # player_1 = Player.new(name, bank_roll)
 
 class Casino
+  #attr_accessor :player
   # make sure you use attr_accessor
   def initialize
     puts "Welcome to the Casino!"
@@ -76,10 +77,10 @@ class Casino
     puts "CASINO MENU"
     puts "1. High / Low"
     puts "2. Slots"
-    puts "3. Black Jack"
+    puts "3. Roulette"
     puts "4. Check Balance"
-    puts "5. Roulette"
-    puts "6. Exit"
+    puts "5. Exit"
+    #puts "3. Black Jack"
     return gets.to_i
   end
 
@@ -94,12 +95,9 @@ class Casino
       Slot::Slots.playing_slots
       # choose_game
     when 3
-      puts 'black_jack'
-      Blackjack.playing_blackjack
-      puts ' '
-    when 5
       puts 'Roulette'
-      Roulette.start
+      game = Roulette.new
+      game.start
       puts ' '
     when 4
       puts "Your balance is: #{$player.bank_roll}"
@@ -111,7 +109,10 @@ class Casino
     end
     choose_game
   end
-
+  # when 3
+  #     puts 'black_jack'
+  #     Blackjack.playing_blackjack
+  #     puts ' '
   def goodbye
     puts "goodbye please comeback to the casino again!"
     exit
