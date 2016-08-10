@@ -9,35 +9,20 @@ class Player
 end
 
 
-
-class Spin_num
-  attr_accessor  :number
-  def initialize(number)
-    @number = number
-  end
-end
-
 class Roulette
   def initialize
     @number_array =  %w(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36)
     @red = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
     @black = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
-    generate_number
   end
 
 
   def generate_number
-    # @wheel_num = 0
     @wheel_num = @number_array.sample
-
-    if @black.include?(@wheel_num)
-      puts "black #{@wheel_num}"
-    else
-      puts "red #{@wheel_num}"
-    end
   end
 
   def roulette_menu
+    generate_number
     puts "\nWelcome to Roulette, how much would you like bet?"
     @bet_amount = gets.strip.to_f
     puts "Pick your color, Red or Black?"
@@ -72,8 +57,6 @@ class Roulette
       puts "Invalid entry, try again."
       roulette_menu
     end
-    compare
-end
 
   def compare
     puts "\nDealer spinning the wheel..."
@@ -89,17 +72,19 @@ end
     end
     play_again
   end
-  def play_again
-    puts "Would you like to play again? (y/n)"
-    again = gets.strip.downcase
+  compare
+end
 
-    if again == 'y'
-      start
-    else
-      exit
-      #casino
+def play_again
+  puts "Would you like to play again? (y/n)"
+  again = gets.strip.downcase
 
-    end
+  if again == 'y'
+    start
+  else
+    exit
+    #casino
+  end
   end
 end
 
