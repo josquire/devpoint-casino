@@ -1,13 +1,11 @@
-require 'colorize'
-#require_relative 'casino'
-require 'pry'
+require'colorize'
+require'pry'
 
 class Player
   def update_balance(num)
     @bank_roll += num
   end
 end
-
 
 class Roulette
   def initialize
@@ -98,3 +96,34 @@ end
 
 @new_game = Roulette.new
 @new_game.roulette_menu
+=======
+module Roulette
+  class Spin_num
+    attr_accessor :color, :number
+    def initialize(number, color)
+      @number = number
+      @color = color
+    end
+  end
+
+  class Roulette
+    def initialize
+      @number_array =  %w(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)
+      generate_number
+    end
+
+
+    def self.generate_number
+      @number = @number_array.sample
+        color = (@number % 2 == 0) ? 'Black' : 'Red'
+        @wheel_num = Spin_num.new(@number, color)
+        puts "#{@wheel_num.number} #{@wheel_num.color}"
+    end
+  end
+
+  def self.start
+    @new_game = Roulette.new
+  end
+end # end module
+
+>>>>>>> fetched roulette

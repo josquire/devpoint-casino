@@ -1,13 +1,6 @@
-require 'colorize'
-# require_relative 'casino'
-require 'pry'
+require'colorize'
+require'pry'
 
-# class Player
-
-#   def update_balance(num)
-#     @bank_roll += num
-#   end
-# end
 module Mechanics
 
   class Card
@@ -49,10 +42,10 @@ module Highlow
     @deck = Mechanics::Deck.new
   end
 
-  def self.start
-    # @new_game = Highlow.new
-    Highlow.generate_cards
-  end
+  # def self.start
+  #   # @new_game = Highlow.new
+  #   Highlow.generate_cards
+  # end
 
   def self.generate_cards
     @deck = Mechanics::Deck.new
